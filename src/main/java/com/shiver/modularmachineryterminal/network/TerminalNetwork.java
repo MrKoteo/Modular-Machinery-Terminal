@@ -1,6 +1,5 @@
 package com.shiver.modularmachineryterminal.network;
 
-import com.shiver.modularmachineryterminal.ModularMachineryTerminal;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
