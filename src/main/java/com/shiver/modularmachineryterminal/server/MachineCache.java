@@ -180,7 +180,7 @@ public class MachineCache {
      * 返回玩家可见的已加载但未成型的机器信息列表，
      * 用于登录提醒和 /mmt_machines 命令。
      *
-     * @param player               目标玩家
+     * @param player 目标玩家
      * @param includeTeamControllers 是否包含团队成员拥有的控制器
      * @return 符合条件的机器列表
      */
@@ -705,8 +705,9 @@ public class MachineCache {
 
     /**
      * 解析机器控制器对应的显示名称。
+     *
      * @param controller 目标机器控制器
-     * @return 对应的文本
+     * @return 机器显示名称
      */
     private static String machineName(TileMultiblockMachineController controller) {
         DynamicMachine machine = controller.getFoundMachine();
@@ -719,11 +720,13 @@ public class MachineCache {
                 return localized;
             }
             ResourceLocation rl = machine.getRegistryName();
-            String key = rl.getNamespace() + "." + rl.getPath();
-            if (I18n.canTranslate(key)) {
-                return I18n.translateToLocal(key);
+            if (rl != null) {
+                String key = rl.getNamespace() + "." + rl.getPath();
+                if (I18n.canTranslate(key)) {
+                    return I18n.translateToLocal(key);
+                }
+                return rl.toString();
             }
-            return rl.toString();
         }
         String formedName = controller.getFormedMachineName();
         return formedName == null || formedName.isEmpty() ? "Unknown Machine" : formedName;
@@ -731,8 +734,9 @@ public class MachineCache {
 
     /**
      * 解析机器控制器在终端中显示的图标。
+     *
      * @param controller 目标机器控制器
-     * @return 方法执行结果
+     * @return 控制器图标物品堆
      */
     private static ItemStack controllerIcon(TileMultiblockMachineController controller) {
         Block block = controller.getWorld().getBlockState(controller.getPos()).getBlock();

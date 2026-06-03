@@ -18,6 +18,11 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 @Mod.EventBusSubscriber(modid = ModularMachineryTerminal.MOD_ID)
 public class PlayerLoggedInHandler {
 
+    /**
+     * 在玩家登录后推送其可见的未成型机器提示。
+     *
+     * @param event 玩家登录事件
+     */
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.player instanceof EntityPlayerMP)) {
@@ -30,6 +35,12 @@ public class PlayerLoggedInHandler {
         }
     }
 
+    /**
+     * 向目标对象发送单台未成型机器的提示消息。
+     *
+     * @param target 消息接收者
+     * @param info 机器信息
+     */
     public static void sendMachineInfo(ICommandSender target, MachineInfo info) {
         BlockPos pos = info.key.pos;
         int dimension = info.key.dimension;
@@ -43,6 +54,7 @@ public class PlayerLoggedInHandler {
         cord.setStyle(new Style().setColor(TextFormatting.AQUA));
 
         message.appendSibling(cord);
+        message.appendSibling(new TextComponentString(" "));
         message.appendSibling(new TextComponentTranslation("modular_machinery_terminal.unformed"));
         target.sendMessage(message);
     }
